@@ -8,6 +8,7 @@ Standard commands live in `package.json` scripts and `CONTRIBUTING.md`. Key ones
 
 Non-obvious notes:
 - Node >=22 and pnpm are required (`.npmrc` sets `engine-strict=true`). The update script runs `pnpm install`.
+- **Claude Code CLI** is preinstalled and available on PATH (native install at `~/.local/bin/claude`, v2.1.207+). PATH persistence comes from `export PATH="$HOME/.local/bin:$PATH"` in `~/.bashrc`; the update script also reinstalls it idempotently (`command -v claude || curl -fsSL https://claude.ai/install.sh | bash`) so every cloud agent has it. Auth still requires an `ANTHROPIC_API_KEY` secret or `claude auth login`. See `.cursor/README-CLAUDE-CODE.md`.
 - `pnpm install` prints a warning about ignored build scripts (esbuild, protobufjs, sharp). This is harmless — dev, lint, and build all work without approving them. Do NOT run the interactive `pnpm approve-builds`.
 - `pnpm build` runs a `postbuild` Pagefind indexing step that logs "Pagefind was not able to build an index" and exits 0 via an `|| echo` fallback. This is expected in a fresh checkout and does not indicate a build failure.
 - `pnpm tauri dev` additionally needs the Rust toolchain (already present as `cargo`) and is only meaningful on a desktop/GUI target; the web flow via `pnpm dev` is sufficient for most testing.
